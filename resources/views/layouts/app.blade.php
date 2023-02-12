@@ -40,7 +40,7 @@
 <body>
     @include('partials.header')
     @include('partials.navside')
-    @include('partials.homeside')
+    {{-- @include('partials.homeside') --}}
 
     @yield('content')
 
