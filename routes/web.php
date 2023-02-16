@@ -14,10 +14,9 @@ use App\Http\Controllers\ArticleController;
 |
 */
 
-/* 
-Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home'); */
 
-Route::get('/', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home');
+Route::get('/admin', [ArticleController::class, 'index'])->name('article.index');
 Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
 Route::post('store', [ArticleController::class, 'store'])->name('article.store');
 Route::get('show/{article}', [ArticleController::class, 'show'])->name('article.show');
@@ -25,10 +24,7 @@ Route::get('edit/{article}', [ArticleController::class, 'edit'])->name('article.
 Route::post('/update',[ArticleController::class, 'update'])->name('article.update');
 Route::delete('/{article}',[ArticleController::class, 'destroy'])->name('article.destroy');
 
+// Route::get('/checkouts', [ArticleController::class, 'panier'])->name('checkout');
+Route::get('/articles/mon-panier', [ArticleController::class, 'panierindex'])->name('article.panier.index');
+Route::get('/articles/mon-panier/{article_id}/{client_id}', [ArticleController::class, 'panierindex'])->name('article.panier.store');
 
-/* Route::get('/posts', [ArticleController::class, 'index']);
-Route::get('/post/add', [ArticleController::class, 'create']);
-Route::post('post/storage', [ArticleController::class, 'store']);
-Route::post('post/delete', [ArticleController::class, 'destroy']);
- */
-Route::get('/checkouts', [ArticleController::class, 'panier'])->name('checkouts');

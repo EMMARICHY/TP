@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\categorie;
+use App\Models\Commande;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -113,24 +114,8 @@ class ArticleController extends Controller
         if ($request->image != null) {
             $request->file('image')->move(public_path('images/articles'), $request->article_id .'.jpg');
         }
-
-
-        // $article->nom_art = $request->input('nom_article');
-        // $article->stock = $request->input('stock_article');
-        // $article->prix = $request->input('prix');
-        // $article->categorie = $request->input('categorie_id');
-        // $article->image = $request->input('image');
-        // $article->save();
-
-        // if ($image = $request->file('image')) {
-        //     $destinationPath = 'images/';
-        //     $profileImage = date('YmdHis') . "." .'.webp' /* $image->getClientOriginalExtension()*/;
-        //     $image->move($destinationPath, $profileImage);
-        //     $input['image'] = "$profileImage";
-        // }
-        
         return redirect()->route('articles.index')
-                        ->with('success','Article mis à jour avec succès');   
+                         ->with('success','Article mis à jour avec succès');   
     }
     /**
      * Remove the specified resource from storage.
@@ -141,12 +126,41 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+        return back()->with('success','supprimé avec succès');
+    }
+    public function panier($article_id, $client_id){
+        $paniers = Commande::where('client_id', '1')->get();
+
+        return view('pages.checkout', compact('paniers'));
+
+        $commandes = Commande::where('article_id', $article_id)->where('client_id', $client_id)->get();
+
+        // dd($commande == null);
+
+        $quantite = 0;
+
+        // if ($commandes != null ) {
+            $quantite = $commandes->count() + 1;
+        // } else {
+        //     $quantite = 0;
+        // }        
+
+        $article = Article::where('id', $article_id)->first();
+        
+        Commande::create([
+            'nom' => $article->nom_article,
+            'quantite' => $quantite,
+            'date_op' => now(),
+            'article_id' => $article_id,
+            'client_id' => $client_id,
+        ]);
 
         return back();
-        // return redirect()->route('article.index')
-        //                 ->with('success','supprimé avec succès');
     }
-    public function panier(){
-        return view('pages.checkout');
+
+    public function panierindex() {
+        $paniers = Commande::where('client_id', '1')->get();
+
+        return view('pages.checkout', compact('paniers'));
     }
 }

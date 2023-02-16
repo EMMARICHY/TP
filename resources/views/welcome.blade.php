@@ -1,29 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<!-- section -->
-<div class="section">
-	<!-- container -->
-	<div class="container">
-		<!-- row -->
-		<div class="row">
-			<!-- banner -->
-			{{-- @foreach ($articles as $article)
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="./img/banner10.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-			@endforeach --}}
-			<!-- /banner -->
-		</div>
-		<!-- /row -->
-	</div>
-	<!-- /container -->
-</div>
-<!-- /section -->
 
 <!-- section -->
 <div class="section">
@@ -40,19 +16,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- /section-title -->
-
-			<!-- banner -->
-			{{-- <div class="col-md-3 col-sm-6 col-xs-6">
-				<div class="banner banner-2">
-					<img src="./img/banner14.jpg" alt="">
-					<div class="banner-caption">
-						<h2 class="white-color">NEW<br>COLLECTION</h2>
-						<button class="primary-btn">Shop Now</button>
-					</div>
-				</div>
-			</div> --}}
-			<!-- /banner -->
+			<!-- /section-title --> 
 
 			<!-- Product Slick -->
 			<div class="col-md-12 col-sm-6 col-xs-6">
@@ -72,7 +36,7 @@
 										<li><span>00 S</span></li>
 									</ul> --}}
 									{{-- <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button> --}}
-									<img src="./img/product01.jpg" alt="">
+									<img src="{{ asset('images/articles/' . $article->image) }}" alt="{{ $article->nom_article }}" height="200px" width="200px">
 								</div>
 								<div class="product-body">
 									<h3 class="product-price">${{ $article->prix }} <del class="product-old-price">${{ $article->prix + 50 }}</del></h3>
@@ -87,7 +51,7 @@
 									<div class="product-btns">
 										{{-- <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button> --}}
-										<a href="{{ route('checkouts') }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Ajout dans le panier</a>
+										<a href="{{ route('article.panier.store', [$article->id, 1]) }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Ajout dans le panier</a>
 									</div>
 								</div>
 							</div>
